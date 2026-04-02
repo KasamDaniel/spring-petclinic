@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    
+    triggers{
+        githubPush()
+    }
+    tools{
+        jdk 'JAVA_HOME'
+        maven 'MAVEN_HOME'
+    }
+
+    stages {
+        stage('git-clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/KasamDaniel/spring-petclinic.git'
+            }
+        }
+           stage('build package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+    }
+}
+
